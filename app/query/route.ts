@@ -8,30 +8,33 @@ const db = new Pool({
     port: 5432,
 });
 
-const client = await db.connect();
-
 async function listInvoices() {
-    const result = await client.query(
-        `
-        SELECT invoices.amount, customers.name
-        FROM invoices
-        JOIN customers ON invoices.customer_id = customers.id
-        WHERE invoices.amount = $1;
-    `,
-        [666]
-    ); // 파라미터를 사용하여 SQL 인젝션 방지
+    const client = await db.connect();
+    try {
+        const result = await client.query(
+            `
+            SELECT invoices.amount, customers.name
+            FROM invoices
+            JOIN customers ON invoices.customer_id = customers.id
+            WHERE invoices.amount = $1;
+            `,
+            [666]
+        );
 
-    return result.rows;
+        return result.rows;
+    } finally {
+        client.release();
+    }
 }
 
 export async function GET() {
-    return Response.json({
-        message:
-            "Uncomment this file and remove this line. You can delete this file when you are finished.",
-    });
     try {
-        return Response.json(await listInvoices());
+        const invoices = await listInvoices();
+        return Response.json({ invoices });
     } catch (error) {
-        return Response.json({ error }, { status: 500 });
+        return Response.json(
+            { error: error || "An error occurred" },
+            { status: 500 }
+        );
     }
 }
