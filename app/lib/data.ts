@@ -214,7 +214,7 @@ export async function fetchInvoiceById(id: string): Promise<InvoiceForm> {
 
         return {
             ...data.rows[0],
-            amount: data.rows[0].amount / 100, // Convert amount from cents to dollars
+            amount: data.rows[0].amount / 100,
         };
     } catch (error) {
         console.error("Database Error:", error);

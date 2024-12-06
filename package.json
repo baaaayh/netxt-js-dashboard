@@ -4,7 +4,8 @@
         "build": "next build",
         "dev": "next dev --turbo",
         "start": "next start",
-        "seed": "node -r dotenv/config ./app/seed/route.ts"
+        "seed": "node -r dotenv/config ./app/seed/route.ts",
+        "lint": "next lint"
     },
     "dependencies": {
         "@heroicons/react": "^2.2.0",
@@ -30,7 +31,9 @@
         "@types/bcrypt": "^5.0.2",
         "@types/node": "22.10.1",
         "@types/react": "npm:types-react@19.0.0-rc.1",
-        "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
+        "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
+        "eslint": "^9",
+        "eslint-config-next": "15.0.4"
     },
     "pnpm": {
         "overrides": {

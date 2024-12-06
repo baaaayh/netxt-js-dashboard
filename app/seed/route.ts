@@ -137,7 +137,6 @@ export async function GET() {
 
         return Response.json({ message: "Database seeded successfully" });
     } catch (error: any) {
-        // error를 any로 지정
         await client.query(`ROLLBACK`);
         return Response.json(
             { error: error.message || "An unknown error occurred" },
